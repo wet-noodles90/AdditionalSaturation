@@ -19,12 +19,8 @@ public class AdditionalSaturation implements ModInitializer {
 	public void onInitialize() {
 		ServerTickEvents.END_WORLD_TICK.register((world) -> {
 			for (PlayerEntity player : world.getPlayers()) {
-				LOGGER.info(String.valueOf(player.getHungerManager().getFoodLevel()));
-				LOGGER.info(String.valueOf(PlayerFullnessUtil.instance().getPlayerFullness((ServerPlayerEntity) player)));
 				final ItemStack HELD_ITEM = player.getMainHandStack();
 				if (!HELD_ITEM.isEmpty() && HELD_ITEM.isIn(ModTags.Items.DETECTED_EDIBLE_FOOD_ITEMS)) {
-					LOGGER.info(String.valueOf(MealItemRegistry.instance().getFullness(player, HELD_ITEM)));
-					LOGGER.info("REAL FOOD!");
 					int max_fullness = getFullness(HELD_ITEM.getItem().getFoodComponent().getHunger());
 					int fullness = max_fullness - getFullness(20 - player.getHungerManager().getFoodLevel());
 					if (fullness < 0) {
